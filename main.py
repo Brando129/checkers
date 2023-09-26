@@ -1,6 +1,6 @@
 # Imports
 import pygame
-from checkers.constants import WIDTH, HEIGHT, SQUARE_SIZE
+from checkers.constants import WIDTH, HEIGHT, SQUARE_SIZE, RED
 # from checkers.board import Board
 from checkers.game import Game
 
@@ -9,6 +9,7 @@ FPS = 60
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Checkers")
 
+# Determines which box the user is clicking
 def get_row_col_from_mouse(pos):
     x, y = pos
     row = y // SQUARE_SIZE
@@ -26,6 +27,10 @@ def main():
     while run:
         clock.tick(FPS)
 
+        if game.winner() != None:
+            print(game.winner()) # Make this more interesting
+            run = False
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -33,8 +38,10 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 row, col = get_row_col_from_mouse(pos)
-                piece = board.get_piece(row, col)
-                board.move(piece, 4, 3)
+                # piece = board.get_piece(row, col)
+                # board.move(piece, 4, 3)
+                game.select(row, col)
+
 
         game.update()
 
