@@ -4,8 +4,8 @@ from .constants import RED, WHITE, SQUARE_SIZE, GRAY
 
 # Piece class
 class Piece:
-    PADDING = 10
-    OUTLINE = 2
+    PADDING = 15
+    OUTLINE = 3
 
     def __init__(self, row, col, color):
         self.row = row
@@ -32,7 +32,7 @@ class Piece:
     # Draws the piece and outline of the piece
     def draw(self, win):
         radius = SQUARE_SIZE // 2 - self.PADDING
-        pygame.dray.circle(win, GRAY, (self.x, self.y), radius + self.OUTLINE)
+        pygame.draw.circle(win, GRAY, (self.x, self.y), radius + self.OUTLINE)
         pygame.draw.circle(win, self.color, (self.x, self.y), radius)
 
     def __repr__(self):

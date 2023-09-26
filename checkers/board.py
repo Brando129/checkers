@@ -1,6 +1,7 @@
 # Imports
 import pygame
-from .constants import BLACK, ROWS, RED, SQUARE_SIZE
+from .constants import BLACK, ROWS, RED, SQUARE_SIZE, COLS, WHITE
+from .piece import Piece
 
 # Board class
 class Board:
@@ -9,6 +10,7 @@ class Board:
         self.selected_piece = None
         self.red_left = self.white_left = 12
         self.red_kings = self.white_kings = 0
+        self.create_board()
 
     # Draws the checker board
     def  draw_squares(self, win):
@@ -17,6 +19,26 @@ class Board:
             for col in range(row % 2, ROWS, 2):
                 pygame.draw.rect(win, RED, (row * SQUARE_SIZE, col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
-    # 
+    # Creating the pieces
     def create_board(self):
-        
+        for row in range(ROWS):
+            self.board.append([])
+            for col in range(COLS):
+                if col % 2 == ((row + 1) % 2):
+                    if row < 3:
+                        self.board[row].append(Piece(row, col, WHITE))
+                    elif row > 4:
+                        self.board[row].append(Piece(row, col, RED))
+                    else:
+                        self.board[row].append(0)
+                else:
+                    self.board[row].append(0)
+
+    # Draws pieces and squares
+    def draw(self, win):
+        self.draw_squares(win)
+        for row in range(ROWS):
+            for col in range(COLS):
+                piece = self.board[row][col]
+                if piece != 0:
+                    piece.draw(win)
